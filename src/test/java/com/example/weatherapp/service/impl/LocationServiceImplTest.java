@@ -2,6 +2,7 @@ package com.example.weatherapp.service.impl;
 
 import com.example.weatherapp.client.WeatherApiClient;
 import com.example.weatherapp.exceptions.DateOutOfRangeException;
+import com.example.weatherapp.exceptions.NoForecastFoundException;
 import com.example.weatherapp.model.Location;
 import com.example.weatherapp.model.LocationRecord;
 import com.example.weatherapp.repository.LocationRepository;
@@ -51,7 +52,7 @@ class LocationServiceImplTest {
 
     @Test
     void getBestLocation_shouldReturnLocationRecord_whenValidDateAndDataAvailable() throws IOException, URISyntaxException, InterruptedException {
-        LocalDate date = LocalDate.now();
+        LocalDate date = LocalDate.parse("2023-06-28");
 
         Map<String, LocationRecord> filteredLocations = new HashMap<>();
         filteredLocations.put("Location1", new LocationRecord("Location1", 10L, 15L, "lat1", "lon1"));
@@ -68,24 +69,22 @@ class LocationServiceImplTest {
 
         LocationRecord result = locationServiceImpl.getBestLocation(date);
 
-        assertEquals(new LocationRecord("Location2", 20L, 25L, "lat2", "lon2"), result);
+        LocationRecord expectedLocation = new LocationRecord("Location2", 20L, 25L, "lat2", "lon2");
+        assertEquals(expectedLocation.locationName(), result.locationName());
+        assertEquals(expectedLocation.temperature(), result.temperature());
+        assertEquals(expectedLocation.windSpeed(), result.windSpeed());
+        assertEquals(expectedLocation.lon(), result.lon());
+        assertEquals(expectedLocation.lat(), result.lat());
     }
 
     @Test
-    void getBestLocation_shouldReturnNull_whenValidDateAndNoDataAvailable() throws IOException, URISyntaxException, InterruptedException {
+    void getBestLocation_shouldThrowNoForecastFoundException_whenValidDateAndNoDataAvailable() throws IOException, URISyntaxException, InterruptedException {
         LocalDate date = LocalDate.now();
-        Map<String, LocationRecord> filteredLocations = new HashMap<>();
-        Map<String, Long> mapOfValuesFromFormula = new HashMap<>();
-
-        Mockito.when(locationFilter.filterByRequirements(Mockito.any())).thenReturn(filteredLocations);
-        Mockito.when(valueCalculator.calculateValueFromFormula(Mockito.any())).thenReturn(mapOfValuesFromFormula);
         Mockito.when(dateChecker.checkDate(Mockito.any())).thenReturn(true);
         Mockito.when(weatherApiClient.getJsonData(Mockito.anyString())).thenReturn(getMockJsonData());
         Mockito.when(locationRepository.findAll()).thenReturn(getMockLocations());
 
-        LocationRecord result = locationServiceImpl.getBestLocation(date);
-
-        assertNull(result);
+        assertThrows(NoForecastFoundException.class, () -> locationServiceImpl.getBestLocation(date));
     }
 
     @Test
