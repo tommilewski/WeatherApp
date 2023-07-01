@@ -1,4 +1,5 @@
 # WeatherApp
+This application is designed to help you find the best location for surfing. It provides weather and location data to determine the most suitable surfing spots based on specific criteria.
 
 The WeatherApp application is written in Java 17 and uses Maven for dependency management and building the project.
 
