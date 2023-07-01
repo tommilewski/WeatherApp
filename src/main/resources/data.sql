@@ -1,0 +1,5 @@
+INSERT INTO LOCATIONS (id, location_name, url,lon,lat) VALUES (default,'JASTRZEBIA','https://api.weatherbit.io/v2.0/forecast/daily?city=Jastarnia&country=pl&key=21e339fb4a5248c49c5b98ebf827e7ad','18.67873','54.69606');
+INSERT INTO LOCATIONS (id, location_name, url,lon,lat) VALUES (default,'BRIDGETOWN','https://api.weatherbit.io/v2.0/forecast/daily?city=Bridgetown&country=Barbados&key=21e339fb4a5248c49c5b98ebf827e7ad','-59.62021','13.10732');
+INSERT INTO LOCATIONS (id, location_name, url,lon,lat) VALUES (default,'FORTALEZA','https://api.weatherbit.io/v2.0/forecast/daily?city=Fortaleza&country=Brazil&key=21e339fb4a5248c49c5b98ebf827e7ad','-38.54306','-3.71722');
+INSERT INTO LOCATIONS (id, location_name, url,lon,lat) VALUES (default,'PISSOURI','https://api.weatherbit.io/v2.0/forecast/daily?city=Pissouri&country=Cyprus&key=21e339fb4a5248c49c5b98ebf827e7ad','34.66942','32.70132');
+INSERT INTO LOCATIONS (id, location_name, url,lon,lat) VALUES (default,'LE_MORNE','https://api.weatherbit.io/v2.0/forecast/daily?city=Le+Morne&country=mq&key=21e339fb4a5248c49c5b98ebf827e7ad','-61','14.7');
